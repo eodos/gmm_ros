@@ -3,6 +3,7 @@ project(gmm)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
 # add_definitions(-std=c++11)
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -15,7 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -105,8 +106,8 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES ros_gmm
+ INCLUDE_DIRS include
+ LIBRARIES asyncserial
  CATKIN_DEPENDS roscpp message_runtime
 #  DEPENDS system_lib
 )
@@ -120,12 +121,16 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  include/gmm
+  include/asyncserial
 )
 
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/ros_gmm.cpp
-# )
+# Declare a C++ library
+add_library(asyncserial
+  STATIC
+  src/asyncserial/AsyncSerial.cpp
+  src/asyncserial/BufferedAsyncSerial.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -135,7 +140,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/ros_gmm_node.cpp)
+add_executable(${PROJECT_NAME}_aplink src/aplink.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -148,9 +153,9 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(${PROJECT_NAME}_aplink
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
