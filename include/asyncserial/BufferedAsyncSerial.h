@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   BufferedAsyncSerial.h
  * Author: Terraneo Federico
  * Distributed under the Boost Software License, Version 1.0.

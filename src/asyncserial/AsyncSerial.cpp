@@ -15,7 +15,7 @@
  * On Mac OS X boost asio's serial ports have bugs, and the usual implementation
  * of this class does not work. So a workaround class was written temporarily,
  * until asio (hopefully) will fix Mac compatibility for serial ports.
- * 
+ *
  * Please note that unlike said in the documentation on OS X until asio will
  * be fixed serial port *writes* are *not* asynchronous, but at least
  * asynchronous *read* works.
