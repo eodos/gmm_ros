@@ -51,6 +51,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   Odometry.msg
+  Commands.msg
 )
 
 ## Generate services in the 'srv' folder
